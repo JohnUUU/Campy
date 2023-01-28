@@ -7,14 +7,14 @@ import appid from '../appId.js'
 
 const token = null
 
-const rtcUid =  Math.floor(Math.random() * 2032)
-const rtmUid =  String(Math.floor(Math.random() * 2032))
+const rtcUid = Math.floor(Math.random() * 2032)
+const rtmUid = String(Math.floor(Math.random() * 2032))
 
 const getRoomId = () => {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
 
-  if (urlParams.get('room')){
+  if (urlParams.get('room')) {
     return urlParams.get('room').toLowerCase()
   }
 }
@@ -40,12 +40,12 @@ let avatar;
 const initRtm = async (name) => {
 
   rtmClient = AgoraRTM.createInstance(appid)
-  await rtmClient.login({'uid':rtmUid, 'token':token})
+  await rtmClient.login({ 'uid': rtmUid, 'token': token })
 
   channel = rtmClient.createChannel(roomId)
   await channel.join()
 
-  await rtmClient.addOrUpdateLocalUserAttributes({'name':name, 'userRtcUid':rtcUid.toString(), 'userAvatar':avatar})
+  await rtmClient.addOrUpdateLocalUserAttributes({ 'name': name, 'userRtcUid': rtcUid.toString(), 'userAvatar': avatar })
 
   getChannelMembers()
 
@@ -61,10 +61,10 @@ const initRtc = async () => {
   rtcClient = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
 
 
-  //rtcClient.on('user-joined', handleUserJoined)
+  // rtcClient.on('user-joined', handleUserJoined)
   rtcClient.on("user-published", handleUserPublished)
   rtcClient.on("user-left", handleUserLeft);
-  
+
 
   await rtcClient.join(appid, roomId, token, rtcUid)
   audioTracks.localAudioTrack = await AgoraRTC.createMicrophoneAudioTrack();
@@ -82,22 +82,22 @@ let initVolumeIndicator = async () => {
   //1
   AgoraRTC.setParameter('AUDIO_VOLUME_INDICATION_INTERVAL', 200);
   rtcClient.enableAudioVolumeIndicator();
-  
+
   //2
   rtcClient.on("volume-indicator", volumes => {
     volumes.forEach((volume) => {
       console.log(`UID ${volume.uid} Level ${volume.level}`);
 
       //3
-      try{
-          let item = document.getElementsByClassName(`avatar-${volume.uid}`)[0]
+      try {
+        let item = document.getElementsByClassName(`avatar-${volume.uid}`)[0]
 
-         if (volume.level >= 50){
-           item.style.borderColor = '#00ff00'
-         }else{
-           item.style.borderColor = "#fff"
-         }
-      }catch(error){
+        if (volume.level >= 50) {
+          item.style.borderColor = '#00ff00'
+        } else {
+          item.style.borderColor = "#fff"
+        }
+      } catch (error) {
         console.error(error)
       }
 
@@ -109,12 +109,12 @@ let initVolumeIndicator = async () => {
 
 // let handleUserJoined = async (user) => {
 //   document.getElementById('members').insertAdjacentHTML('beforeend', `<div class="speaker user-rtc-${user.uid}" id="${user.uid}"><p>${user.uid}</p></div>`)
-// } 
+// }
 
 let handleUserPublished = async (user, mediaType) => {
-  await  rtcClient.subscribe(user, mediaType);
+  await rtcClient.subscribe(user, mediaType);
 
-  if (mediaType == "audio"){
+  if (mediaType == "audio") {
     audioTracks.remoteAudioTracks[user.uid] = [user.audioTrack]
     user.audioTrack.play();
   }
@@ -122,12 +122,12 @@ let handleUserPublished = async (user, mediaType) => {
 
 let handleUserLeft = async (user) => {
   delete audioTracks.remoteAudioTracks[user.uid]
-  //document.getElementById(user.uid).remove()
+  document.getElementById(user.uid).remove()
 }
 
 let handleMemberJoined = async (MemberId) => {
 
-  let {name, userRtcUid, userAvatar} = await rtmClient.getUserAttributesByKeys(MemberId, ['name', 'userRtcUid', 'userAvatar'])
+  let { name, userRtcUid, userAvatar } = await rtmClient.getUserAttributesByKeys(MemberId, ['name', 'userRtcUid', 'userAvatar'])
 
   let newMember = `
   <div class="speaker user-rtc-${userRtcUid}" id="${MemberId}">
@@ -145,29 +145,29 @@ let handleMemberLeft = async (MemberId) => {
 let getChannelMembers = async () => {
   let members = await channel.getMembers()
 
-  for (let i = 0; members.length > i; i++){
+  for (let i = 0; members.length > i; i++) {
 
-    let {name, userRtcUid, userAvatar} = await rtmClient.getUserAttributesByKeys(members[i], ['name', 'userRtcUid', 'userAvatar'])
+    let { name, userRtcUid, userAvatar } = await rtmClient.getUserAttributesByKeys(members[i], ['name', 'userRtcUid', 'userAvatar'])
 
     let newMember = `
     <div class="speaker user-rtc-${userRtcUid}" id="${members[i]}">
         <img class="user-avatar avatar-${userRtcUid}" src="${userAvatar}"/>
         <p>${name}</p>
     </div>`
-  
+
     document.getElementById("members").insertAdjacentHTML('beforeend', newMember)
   }
 }
 
 const toggleMic = async (e) => {
-  if (micMuted){
+  if (micMuted) {
     e.target.src = 'icons/mic.svg'
     e.target.style.backgroundColor = 'ivory'
     micMuted = false
-  }else{
+  } else {
     e.target.src = 'icons/mic-off.svg'
     e.target.style.backgroundColor = 'indianred'
-    
+
     micMuted = true
   }
   audioTracks.localAudioTrack.setMuted(micMuted)
@@ -179,7 +179,7 @@ let lobbyForm = document.getElementById('form')
 const enterRoom = async (e) => {
   e.preventDefault()
 
-  if (!avatar){
+  if (!avatar) {
     alert('Please select an avatar')
     return
   }
@@ -222,16 +222,16 @@ document.getElementById('mic-icon').addEventListener('click', toggleMic)
 
 const avatars = document.getElementsByClassName('avatar-selection')
 
-for (let i=0; avatars.length > i; i++){
-  
-  avatars[i].addEventListener('click', ()=> {
-    for (let i=0; avatars.length > i; i++){
+for (let i = 0; avatars.length > i; i++) {
+
+  avatars[i].addEventListener('click', () => {
+    for (let i = 0; avatars.length > i; i++) {
       avatars[i].style.borderColor = "#fff"
       avatars[i].style.opacity = .5
     }
 
-      avatar = avatars[i].src
-      avatars[i].style.borderColor = "#00ff00"
-      avatars[i].style.opacity = 1
+    avatar = avatars[i].src
+    avatars[i].style.borderColor = "#00ff00"
+    avatars[i].style.opacity = 1
   })
 }
