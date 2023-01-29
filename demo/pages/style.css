@@ -20,3 +20,15 @@
     margin-bottom: 0.5rem;
     margin-left: 5rem;
  }
+
+ .top {
+    height:20vh;
+    justify-content:center;
+ }
+
+ .grid-container {
+    display:grid;
+    gap: 50px 100px;   
+    grid-template-columns: auto auto auto;
+    
+ }
