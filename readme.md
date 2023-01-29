@@ -1,48 +1,26 @@
-# Voice Rooms Chat App
+# Brown Hackathon 2023: Campy
+Inspiration
+When we were kids, the campfire was a place to tell stories and share what was happening in our lives. In much the same way, we wanted to encapsulate that feeling online to create a platform to share stories with others.
 
-A simple voice chat app using the Agora RTC And RTM Web SDK. 
+What it does
+Campy is a web-app that lets users share stories and ideas through small-sized voice chats. One functionality that makes Campy unique is the ability for users to listen in on conversations without needing to join the group.
 
-Watch the complete video course [here!](https://youtu.be/abka2ug0kbs)
+How we built it
+We used Javascript, Agorra SDK, HTML, and CSS to create the webapp. We used Figma to design our workup.
 
-**Room**
-<img src="images/room-preview.png"/>
+Challenges we ran into
+Formatting was a major challenge. Finding a good voice chat library to use was also challenging and took a lot of switching around.
 
-**Lobby**
+Accomplishments that we're proud of
+We're proud for finishing the project!
 
-<img src="images/lobby-preview.png"/>
+What we learned
+We learned a lot about how to use voice chat libraries and integrating it with javascript onto a frontend.
 
-### Installation
+What's next for Campy
+We're developing new features that will allow you to see how many visitors are listening in before clicking on a campfire. We also want to implement live transcription for those who are hearing impaired.
 
-> Ensure you have Node JS installed
+A voice chat app using the Agora RTC And RTM Web SDK. 
 
 
-```
-git clone https://github.com/divanov11/Voice-Chat-Rooms
-
-cd Voice-Chat-Rooms/demo
-
-npm install
-```
-
-Add you APP ID Inside of `appid.js`
-
-> NOTE: Get this from your Agora console when you initiate a new project.
-
-```js
-//appId.js
-const appid = "YOU AGORA APP ID"
-
-export default appid;
-```
-
-Start Development server
-
-```
-npm run dev
-```
-
-### Features
-- Create/Join breakout rooms
-- Active speaker volume indicator
-- Display user names and avatars
 
