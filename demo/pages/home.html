@@ -9,9 +9,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
   </head>
-    <body class="background d-flex">
-        <div class="container-fluid stars align-item-center justify-content-center"> 
-                <p class="display-1 text-center text-light">Campy</p>
+    <body class="background">
+        <div class="container-fluid stars d-flex flex-column align-items-center justify-content-center"> 
+          <p class="display-1 text-center text-light" style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Campy</p>
+          <div id="login" class="d-flex flex-column align-items-center" style="max-width: 75vw"> 
+            <form class="d-flex flex-column" role="search">
+              <input class="form-control me-2" type="search" placeholder="Username" aria-label="Search">
+            </form>
+            <form class="d-flex flex-column" role="search">
+              <input class="form-control me-2 mt-2" type="search" placeholder="Password" aria-label="Search">
+              
+              <a class="btn btn-outline-warning mt-2" href="search.html" role="button">Login</a>
+            </form> 
+          </div>
         </div>
+      <div class="d-flex justify-content-center align-items-center">
+        <img src="./image/logo.svg" style="height:30vh;"><img>
+      </div>
+
+      <div id="register" style="position:absolute; top:20px; right:10px">
+        <p class="text-light h5">Register Here</p>
+      </div>
     </body>
 </html>

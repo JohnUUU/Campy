@@ -4,6 +4,7 @@
         height: calc(100vh);
     
 }
+
  .tent {
     width:150px;
 
@@ -13,5 +14,9 @@
     background:
         url('image/Group\ 13.svg') center;
         height: 50vh;
-        min-width: 1920px;
+ }
+
+ .option {
+    margin-bottom: 0.5rem;
+    margin-left: 5rem;
  }
