@@ -1,0 +1,19 @@
+<svg width="107" height="73" viewBox="0 0 107 73" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_f_20_11)">
+<path d="M6.5 29.5L42 6.5L106 43.5L72 61.9571L53.5 72L6.5 29.5Z" fill="#95A187" fill-opacity="0.16"/>
+</g>
+<path d="M45 65.5C45 65.5 43.5 35.5 59.5 26.5C75.5 17.5 75.5 49 75.5 49" stroke="#993B55" stroke-width="2" stroke-linecap="round" stroke-linejoin="bevel"/>
+<path d="M59.519 26.5712C43.519 35.5712 45.019 65.5712 45.019 65.5712L1.01903 41.5712C1.01903 41.5712 0.0189972 16.0712 12.519 5.07124C19.519 -1.08875 23.519 1.57123 23.519 1.57123L67.5859 25.5712C65.4959 24.5788 62.8553 24.6946 59.519 26.5712Z" fill="#A64862"/>
+<path d="M24.0374 54.6172C24.0374 54.6172 22.5374 24.6172 38.5374 15.6172C54.5374 6.61719 54.5374 38.1172 54.5374 38.1172" stroke="#993B55" stroke-width="2" stroke-linecap="round" stroke-linejoin="bevel"/>
+<path d="M1.0748 41.7344C1.0748 41.7344 -0.425204 11.7344 15.5748 2.73437C31.5748 -6.26563 31.5748 25.2344 31.5748 25.2344" stroke="#993B55" stroke-width="2" stroke-linecap="round" stroke-linejoin="bevel"/>
+<path d="M60.2337 27.5528C43.4673 36.1945 45.0392 65 45.0392 65L77 49.157C77 49.157 77 18.9111 60.2337 27.5528Z" fill="#9E8C73" stroke="#993B55" stroke-width="2" stroke-linecap="round" stroke-linejoin="bevel"/>
+<path d="M55 71L45 65C45 65 45.496 58.8922 46 55C46.4823 51.2752 47.5 45.5 47.5 45.5C47.5 45.5 49.5825 53.9863 51 59C52.344 63.7534 55 71 55 71Z" fill="#AC4B68"/>
+<path d="M81.2697 51.4878C79.3857 50.3849 76.1929 49.1478 76.1929 49.1478C76.1929 49.1478 77.1356 44.8058 77 42C76.7824 37.4973 73.5 31 73.5 31C73.5 31 80.056 38.1856 81.9994 42.9603C83.8396 47.4817 85.8786 54.8431 85.8786 54.8431C85.8786 54.8431 83.1911 52.6125 81.2697 51.4878Z" fill="#AC4B68"/>
+<defs>
+<filter id="filter0_f_20_11" x="5.5" y="5.5" width="101.5" height="67.5" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="0.5" result="effect1_foregroundBlur_20_11"/>
+</filter>
+</defs>
+</svg>

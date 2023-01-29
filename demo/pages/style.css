@@ -1,0 +1,17 @@
+.background {
+    background: 
+        url('image/background.png') center;
+        height: calc(100vh);
+    
+}
+ .tent {
+    width:150px;
+
+ }
+
+ .stars {
+    background:
+        url('image/Group\ 13.svg') center;
+        height: 50vh;
+        min-width: 1920px;
+ }
