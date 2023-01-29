@@ -9,6 +9,7 @@ const token = null
 
 const rtcUid = Math.floor(Math.random() * 2032)
 const rtmUid = String(Math.floor(Math.random() * 2032))
+const count = 0;
 
 const getRoomId = () => {
   const queryString = window.location.search;
@@ -126,19 +127,25 @@ let handleUserLeft = async (user) => {
 }
 
 let handleMemberJoined = async (MemberId) => {
+  if (count < 5) {
+    let { name, userRtcUid, userAvatar } = await rtmClient.getUserAttributesByKeys(MemberId, ['name', 'userRtcUid', 'userAvatar'])
+    count++;
+    let newMember = `
+    <div class="member-${count}" id="${MemberId}">
+      <img class="user-avatar avatar-${userRtcUid}" src="${userAvatar}"/>
+        <p>${name}</p>
+    </div>`
 
-  let { name, userRtcUid, userAvatar } = await rtmClient.getUserAttributesByKeys(MemberId, ['name', 'userRtcUid', 'userAvatar'])
+    document.getElementById("members").insertAdjacentHTML('beforeend', newMember)
+  } else {
+    alert("Sorry the Campfire is full");
+    return;
+  }
 
-  let newMember = `
-  <div class="speaker user-rtc-${userRtcUid}" id="${MemberId}">
-    <img class="user-avatar avatar-${userRtcUid}" src="${userAvatar}"/>
-      <p>${name}</p>
-  </div>`
-
-  document.getElementById("members").insertAdjacentHTML('beforeend', newMember)
 }
 
 let handleMemberLeft = async (MemberId) => {
+  count--;
   document.getElementById(MemberId).remove()
 }
 
@@ -150,9 +157,9 @@ let getChannelMembers = async () => {
     let { name, userRtcUid, userAvatar } = await rtmClient.getUserAttributesByKeys(members[i], ['name', 'userRtcUid', 'userAvatar'])
 
     let newMember = `
-    <div class="speaker user-rtc-${userRtcUid}" id="${members[i]}">
+    <div class="member-${i}" id="${members[i]}">
         <img class="user-avatar avatar-${userRtcUid}" src="${userAvatar}"/>
-        <p>${name}</p>
+        <p class="name">${name}</p>
     </div>`
 
     document.getElementById("members").insertAdjacentHTML('beforeend', newMember)
