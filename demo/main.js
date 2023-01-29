@@ -9,19 +9,18 @@ const token = null
 
 const rtcUid = Math.floor(Math.random() * 2032)
 const rtmUid = String(Math.floor(Math.random() * 2032))
+const count = 0;
+let inRoom = false;
 
 const getRoomId = () => {
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-
-  if (urlParams.get('room')) {
-    return urlParams.get('room').toLowerCase()
+  let room = localStorage.getItem("room")
+  if (room == null) {
+    room = "My Campfire"
   }
+  return room
 }
 
-let roomId = getRoomId() || null
-document.getElementById('form').roomname.value = roomId
-
+let roomId = getRoomId()
 
 let audioTracks = {
   localAudioTrack: null,
@@ -126,19 +125,25 @@ let handleUserLeft = async (user) => {
 }
 
 let handleMemberJoined = async (MemberId) => {
+  if (count < 5) {
+    let { name, userRtcUid, userAvatar } = await rtmClient.getUserAttributesByKeys(MemberId, ['name', 'userRtcUid', 'userAvatar'])
+    count++;
+    let newMember = `
+    <div class="member-${count}" id="${MemberId}">
+      <img class="user-avatar avatar-${userRtcUid}" src="${userAvatar}"/>
+        <p>${name}</p>
+    </div>`
 
-  let { name, userRtcUid, userAvatar } = await rtmClient.getUserAttributesByKeys(MemberId, ['name', 'userRtcUid', 'userAvatar'])
+    document.getElementById("members").insertAdjacentHTML('beforeend', newMember)
+  } else {
+    alert("Sorry the Campfire is full");
+    return;
+  }
 
-  let newMember = `
-  <div class="speaker user-rtc-${userRtcUid}" id="${MemberId}">
-    <img class="user-avatar avatar-${userRtcUid}" src="${userAvatar}"/>
-      <p>${name}</p>
-  </div>`
-
-  document.getElementById("members").insertAdjacentHTML('beforeend', newMember)
 }
 
 let handleMemberLeft = async (MemberId) => {
+  count--;
   document.getElementById(MemberId).remove()
 }
 
@@ -150,9 +155,9 @@ let getChannelMembers = async () => {
     let { name, userRtcUid, userAvatar } = await rtmClient.getUserAttributesByKeys(members[i], ['name', 'userRtcUid', 'userAvatar'])
 
     let newMember = `
-    <div class="speaker user-rtc-${userRtcUid}" id="${members[i]}">
+    <div class="member-${i}" id="${members[i]}">
         <img class="user-avatar avatar-${userRtcUid}" src="${userAvatar}"/>
-        <p>${name}</p>
+        <p class="name">${name}</p>
     </div>`
 
     document.getElementById("members").insertAdjacentHTML('beforeend', newMember)
@@ -162,11 +167,9 @@ let getChannelMembers = async () => {
 const toggleMic = async (e) => {
   if (micMuted) {
     e.target.src = 'icons/mic.svg'
-    e.target.style.backgroundColor = 'ivory'
     micMuted = false
   } else {
     e.target.src = 'icons/mic-off.svg'
-    e.target.style.backgroundColor = 'indianred'
 
     micMuted = true
   }
@@ -177,6 +180,7 @@ const toggleMic = async (e) => {
 let lobbyForm = document.getElementById('form')
 
 const enterRoom = async (e) => {
+  inRoom = true;
   e.preventDefault()
 
   if (!avatar) {
@@ -184,7 +188,6 @@ const enterRoom = async (e) => {
     return
   }
 
-  roomId = e.target.roomname.value.toLowerCase();
   window.history.replaceState(null, null, `?room=${roomId}`);
 
   initRtc()
@@ -203,16 +206,21 @@ let leaveRtmChannel = async () => {
 }
 
 let leaveRoom = async () => {
-  audioTracks.localAudioTrack.stop()
-  audioTracks.localAudioTrack.close()
-  rtcClient.unpublish()
-  rtcClient.leave()
+  if (inRoom) {
+    audioTracks.localAudioTrack.stop()
+    audioTracks.localAudioTrack.close()
+    rtcClient.unpublish()
+    rtcClient.leave()
 
-  leaveRtmChannel()
+    leaveRtmChannel()
 
-  document.getElementById('form').style.display = 'block'
-  document.getElementById('room-header').style.display = 'none'
-  document.getElementById('members').innerHTML = ''
+    document.getElementById('form').style.display = 'block'
+    document.getElementById('room-header').style.display = 'none'
+    document.getElementById('members').innerHTML = ''
+    inRoom = false;
+  } else {
+    window.location.href = "pages/search.html";
+  }
 }
 
 lobbyForm.addEventListener('submit', enterRoom)
@@ -221,6 +229,7 @@ document.getElementById('mic-icon').addEventListener('click', toggleMic)
 
 
 const avatars = document.getElementsByClassName('avatar-selection')
+console.log(avatars);
 
 for (let i = 0; avatars.length > i; i++) {
 
