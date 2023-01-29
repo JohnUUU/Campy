@@ -2,14 +2,14 @@ import './style.css'
 import AgoraRTC from "agora-rtc-sdk-ng"
 import AgoraRTM from "agora-rtm-sdk"
 
-import appid from '../appId.js'
+const appid = "0ff8825c3803495aa8ec6108d2b7e9f5";
 
 
 const token = null
 
 const rtcUid = Math.floor(Math.random() * 2032)
 const rtmUid = String(Math.floor(Math.random() * 2032))
-const count = 0;
+let count = 0;
 let inRoom = false;
 
 const getRoomId = () => {
