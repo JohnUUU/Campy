@@ -10,19 +10,17 @@ const token = null
 const rtcUid = Math.floor(Math.random() * 2032)
 const rtmUid = String(Math.floor(Math.random() * 2032))
 const count = 0;
+let inRoom = false;
 
 const getRoomId = () => {
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-
-  if (urlParams.get('room')) {
-    return urlParams.get('room').toLowerCase()
+  let room = localStorage.getItem("room")
+  if (room == null) {
+    room = "My Campfire"
   }
+  return room
 }
 
-let roomId = getRoomId() || null
-document.getElementById('form').roomname.value = roomId
-
+let roomId = getRoomId()
 
 let audioTracks = {
   localAudioTrack: null,
@@ -169,11 +167,9 @@ let getChannelMembers = async () => {
 const toggleMic = async (e) => {
   if (micMuted) {
     e.target.src = 'icons/mic.svg'
-    e.target.style.backgroundColor = 'ivory'
     micMuted = false
   } else {
     e.target.src = 'icons/mic-off.svg'
-    e.target.style.backgroundColor = 'indianred'
 
     micMuted = true
   }
@@ -184,6 +180,7 @@ const toggleMic = async (e) => {
 let lobbyForm = document.getElementById('form')
 
 const enterRoom = async (e) => {
+  inRoom = true;
   e.preventDefault()
 
   if (!avatar) {
@@ -191,7 +188,6 @@ const enterRoom = async (e) => {
     return
   }
 
-  roomId = e.target.roomname.value.toLowerCase();
   window.history.replaceState(null, null, `?room=${roomId}`);
 
   initRtc()
@@ -210,16 +206,21 @@ let leaveRtmChannel = async () => {
 }
 
 let leaveRoom = async () => {
-  audioTracks.localAudioTrack.stop()
-  audioTracks.localAudioTrack.close()
-  rtcClient.unpublish()
-  rtcClient.leave()
+  if (inRoom) {
+    audioTracks.localAudioTrack.stop()
+    audioTracks.localAudioTrack.close()
+    rtcClient.unpublish()
+    rtcClient.leave()
 
-  leaveRtmChannel()
+    leaveRtmChannel()
 
-  document.getElementById('form').style.display = 'block'
-  document.getElementById('room-header').style.display = 'none'
-  document.getElementById('members').innerHTML = ''
+    document.getElementById('form').style.display = 'block'
+    document.getElementById('room-header').style.display = 'none'
+    document.getElementById('members').innerHTML = ''
+    inRoom = false;
+  } else {
+    window.location.href = "pages/search.html";
+  }
 }
 
 lobbyForm.addEventListener('submit', enterRoom)
@@ -228,6 +229,7 @@ document.getElementById('mic-icon').addEventListener('click', toggleMic)
 
 
 const avatars = document.getElementsByClassName('avatar-selection')
+console.log(avatars);
 
 for (let i = 0; avatars.length > i; i++) {
 
