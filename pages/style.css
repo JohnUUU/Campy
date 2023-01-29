@@ -1,0 +1,43 @@
+.background {
+   background:
+      url('image/background.png') center;
+   height: calc(100vh);
+
+}
+
+.tent {
+   width: 150px;
+
+}
+
+.stars {
+   background:
+      url('image/Group\ 13.svg') center;
+   height: 50vh;
+}
+
+.option {
+   margin-bottom: 0.5rem;
+   margin-left: 5rem;
+}
+
+.option {
+   margin-bottom: 0.5rem;
+   margin-left: 5rem;
+}
+
+.top {
+   height: 20vh;
+   justify-content: center;
+}
+
+.grid-container {
+   display: grid;
+   gap: 50px 100px;
+   grid-template-columns: auto auto auto;
+
+}
+
+.avatars {
+   display: none;
+}
